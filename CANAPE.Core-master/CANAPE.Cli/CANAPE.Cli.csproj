@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>netcoreapp2.0; net471</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\CANAPE\CANAPE.licenseheader" Link="CANAPE.licenseheader" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CANAPE.Cli.Lib\CANAPE.Cli.Lib.csproj" />
+  </ItemGroup>
+
+</Project>
