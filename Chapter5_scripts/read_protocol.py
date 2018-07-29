@@ -19,6 +19,12 @@ def read_int(f):
 def read_byte(f):
 	return ord(read_bytes(f,1))
 
+def calc_chksum(unk2, data):
+	chksum = unk2
+	for i in range(len(data)):
+		chksum += ord(data[i:i+1])
+	return chksum
+
 filename = sys.argv[1]
 file_size = os.path.getsize(filename)
 
@@ -39,7 +45,7 @@ while f.tell() < file_size:
 #	print("Binary output whil in loop: %s" %read_bytes(f,4))
 #	print("Unpacked integer using read bytes method in while loop is: %d" %unpack("!i", read_bytes(f,4))[0])
 	length = read_int(f)
-	unk1 = read_int(f)
+	chksum = read_int(f)
 	unk2 = read_byte(f)
 	data = read_bytes(f, length - 1)
-	print("Len: %d, Unk1: %d, Unk2: %d, Data: %s" %(length, unk1, unk2, data))
+	print("Len: %d, Chk: %d/%d, Unk2: %d, Data: %s" % (length, chksum, calc_chksum(unk2, data), unk2, data))
