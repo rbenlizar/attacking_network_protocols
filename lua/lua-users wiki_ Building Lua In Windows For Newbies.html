@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0056)http://lua-users.org/wiki/BuildingLuaInWindowsForNewbies -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><title>lua-users wiki: Building Lua In Windows For Newbies</title>
+<link type="text/css" rel="stylesheet" href="./lua-users wiki_ Building Lua In Windows For Newbies_files/main.css">
+</head>
+<body><table width="100%" border="0"> <tbody><tr><td align="left" width="100%"><h1><a href="http://lua-users.org/cgi-bin/wiki.pl?action=search&amp;string=BuildingLuaInWindowsForNewbies&amp;body=1" title="List pages referring to BuildingLuaInWindowsForNewbies">Building Lua In Windows For Newbies</a></h1></td><td align="right">
+    <table cellpadding="0" cellspacing="0" border="0" width="1%">
+      <tbody>
+        <tr>
+            <td><a href="http://lua-users.org/">
+            <img src="./lua-users wiki_ Building Lua In Windows For Newbies_files/nav-logo.png" alt="lua-users home" width="177" height="40" border="0"></a></td>
+        </tr>
+        <tr>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td><img src="./lua-users wiki_ Building Lua In Windows For Newbies_files/nav-elbow.png" alt="" width="48" height="40"></td>
+                    <td nowrap="" valign="middle" width="100%">
+                        <a href="http://lua-users.org/wiki/" class="nav">wiki</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+<form method="post" action="http://lua-users.org/wiki/FindPage" enctype="application/x-www-form-urlencoded" style="display:inline; margin:0;">
+<input type="hidden" name="action" value="search"><input type="text" name="string" size="20" style="" id="search_query1"><input type="hidden" name="title" value="1"><input type="submit" name=".submit" value="Search"><input type="hidden" name="body" value="on"></form></td></tr> </tbody></table>
+<br clear="all">
+<h2>Introduction</h2>
+<p>
+This is a step-by-step tutorial to get up and running with Lua on Microsoft Windows systems by downloading
+and compiling the sources using only free tools or tools already present on any Windows
+installation. Very little programming experience is required from the user. This tutorial may also be of some interest to expert Linux users having little knowledge of Windows platforms.
+</p><p>
+If you are an experienced programmer and find this tutorial too easy or limited, please consult the page <a href="http://lua-users.org/wiki/BuildingLua">BuildingLua</a>, which is far more technical and detailed.
+</p><p>
+</p><hr><h3>Overview and Prerequisites</h3>
+<p>
+Assumptions about the reader:
+</p><ul>
+<li> Has a general knowledge of the Windows file system and knows how to perform basic operations on it using the OS-provided tools (browse the file system, copy/move a file, rename a file, create a directory, etc.).
+</li><li> Knows how to download a file from the Internet using a web browser.
+</li><li> Knows how to install a program in Windows using an installer.
+</li><li> Knows what a text file is and how to create one using a text editor (Windows Notepad is enough for this tutorial, but the freely available <a href="http://www.scintilla.org/SciTE.html">[SciTE]</a> or <a href="http://foicica.com/textadept/">[TextAdept]</a> could be better choices for a novice programmer).
+</li><li> Knows what a compressed archive is and how to decompress it.
+</li><li> Knows what the Windows command shell is and how to bring it up.
+</li><li> Knows what the Windows executable files search path is and how to add entries to it (this is sometimes referred to as <em>the system path</em> or simply <em>the path</em> and is related to Windows <strong>PATH</strong> environment variable <a href="https://en.wikipedia.org/wiki/PATH_%28variable%29">[1]</a>).
+</li></ul>
+<p>
+Many of the assumptions above are not strict requirements, because in the following some procedures will be explained in detail, but the reader should not <em><strong>expect</strong></em> too much hand-holding on such subjects.
+</p><p>
+The tutorial is organized in sequential steps that can be outlined as follows:
+</p><ul>
+<li> Download a suitable C-compiler (TDM GCC).
+</li><li> Download Lua source package.
+</li><li> Download a decompressor for the Lua source package (7-zip).
+</li><li> Install the compiler.
+</li><li> Install the decompressor.
+</li><li> Decompress the archive in a suitable location.
+</li><li> Configure the compiler in such a way it can find the sources and start the building process (we will use a Windows command shell script to do this).
+</li></ul>
+<p>
+<strong>Important Note:</strong> we recommend that you <strong>read this page in its entirety before actually beginning</strong> with the procedure. Make sure to have understood everything in advance: this could save you some time and troubles later. This procedure is rather foolproof (we hope), but you never know! <strong>;-)</strong>
+</p><p>
+</p><p>
+<strong>Note:</strong> the procedure has been tested, using an account with administrative privileges, on an x86 32 bit machine running Windows XP professional with Service Pack 3 (SP3) installed (Intel Mobile Core 2 Duo T7500 - 2GB RAM). The compiler used is TDM GCC 4.9.2 (32 bit version).
+</p><p>
+</p><p>
+<strong>Note:</strong> as time goes by some of the links here contained could well become outdated. That's why below we give not only the direct links to packages but also the link to the main pages for the applications involved. This should allow the motivated reader to adapt to the obvious changes (e.g. compensate for future version numbers in the links) browsing the websites by himself, should this page not be updated.
+</p><p>
+</p><p>
+</p><hr><h2>Step by Step Tutorial</h2>
+<p>
+</p><p>
+</p><h3>Step 1: Download the Compiler (TDM-GCC)</h3>
+<p>
+We will use the Windows port of the open source GCC compiler by TDM.
+The download page is found at <a href="http://tdm-gcc.tdragon.net/download">[2]</a>, while
+the following is the direct link for the package we need:
+<a href="http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%20Installer/tdm-gcc-4.9.2.exe/download">[3]</a>.
+Click on the previous link, follow the instructions and wait for the download to complete. The downloaded file should be <code>tdm-gcc-4.9.2.exe</code>. It is a ~30MB download, so be sure to have a fast enough Internet connection.
+</p><p>
+To avoid possible problems, make sure that the downloaded package lies in a directory (folder) whose complete path doesn't contain spaces. If this is not the case, copy or move it in a directory which meets this requirement. All the packages that we'll download should end up in this directory (we will use it as a temporary working directory for the whole tutorial).
+</p><p>
+For the purpose of this tutorial we will assume you created the following folder as a working directory:
+</p><p>
+</p><pre>        C:\gcc-lua-install
+</pre>
+<p>
+Copy (or move) the installation package you just downloaded in the working directory, if you didn't download it there in the first place.
+Now our working directory should have the following content:
+</p><p>
+</p><pre>        C:\gcc-lua-install\tdm-gcc-4.9.2.exe
+</pre>
+<p>
+</p><p>
+</p><h3>Step 2: Download Lua Sources</h3>
+<p>
+Lua sources download page is <a href="http://www.lua.org/download.html">[4]</a>. This is the direct dowload link to the latest version at the time of this writing: <a href="http://www.lua.org/ftp/lua-5.3.0.tar.gz">[5]</a>.
+Click on the previous link, follow the instructions and wait for the download to complete.
+Make sure that the file you download lies in the <code>C:\gcc-lua-install</code> directory (or copy/move it there after the download - we won't restate this).
+</p><p>
+Now we have two files in our working directory:
+</p><p>
+</p><pre>        C:\gcc-lua-install\tdm-gcc-4.9.2.exe
+        C:\gcc-lua-install\lua-5.3.0.tar.gz
+</pre>
+<p>
+</p><p>
+</p><h3>Step 3: Download a Decompressor (7-Zip) for Lua Sources</h3>
+<p>
+Lua sources are packaged in an archive format very common on Linux platforms, but which is unusual on Windows: the TAR-GZ format, as hinted by the .tar.gz double extension of the file. Windows OSes cannot decompress this format natively, so we need a program that can do that. A very good and versatile free compression/decompression program for Windows that can handle TAR-GZ files (and many other compressed formats) is <a href="http://www.7-zip.org/">[7-zip]</a>.
+</p><p>
+Since we want to keep the process as simple as possible we won't use the original 7-zip installation package, because this latter modifies the system when it is installed. Instead we will use an alternative "distribution" packaged by <a href="http://portableapps.com/">[PortableApps.com]</a> and available from the page: <a href="http://portableapps.com/apps/utilities/7-zip_portable">[6]</a>. Click on the download link, follow the instructions and wait for the download to complete. Make sure that also this file lies in our working directory.
+</p><p>
+</p><p>
+Now we have three files in our working directory:
+</p><p>
+</p><pre>        C:\gcc-lua-install\tdm-gcc-4.9.2.exe
+        C:\gcc-lua-install\lua-5.3.0.tar.gz
+        C:\gcc-lua-install\7-ZipPortable_9.20_Rev_3.paf.exe
+</pre>
+<p>
+</p><p>
+</p><p>
+</p><h3>Step 4: Install the Compiler</h3>
+<p>
+Now browse with <strong>Windows Explorer</strong>, Windows' graphical file manager (this is <strong>NOT</strong> Internet Explorer!), into our working directory and execute the compiler's installer by double-clicking on <code>tdm-gcc-4.9.2.exe</code>. A dialog should appear.
+</p><p>
+</p><ul>
+<li> <strong>Uncheck</strong> the option <strong>Check for updated files on the TDM-GCC server</strong>.
+</li><li> Press the button <strong>Create</strong>.
+</li><li> In the edit box that appear specify <strong><code>C:\gcc-lua-install\tdm-gcc</code></strong> as installation directory.
+</li><li> Press the button <strong>Next</strong>.
+</li><li> In the selection tree that appears scroll to the end and <strong>uncheck</strong> the options <strong>Start Menu Items</strong> and <strong>Add to PATH</strong> (this step is not strictly necessary, but it ensures that the compiler installation leaves the system completely clean, besides extracting the files into the  directory specified above).
+</li><li> Press the button <strong>Install</strong> and wait for the installation to complete.
+</li><li> When the installer declares the installation successful, press the button <strong>Next</strong>.
+</li><li> Press the button <strong>Finish</strong> (you may read the readme file or not - it is not necessary for our purposes).
+</li></ul>
+<p>
+</p><p>
+The current content of our working directory now should be:
+</p><p>
+</p><pre>        C:\gcc-lua-install\tdm-gcc-4.9.2.exe
+        C:\gcc-lua-install\lua-5.3.0.tar.gz
+        C:\gcc-lua-install\7-ZipPortable_9.20_Rev_3.paf.exe
+        C:\gcc-lua-install\tdm-gcc
+</pre>
+<p>
+with the last item being the subdirectory where the compiler is now installed (note that in Windows Explorer these items will probably be displayed in a different order).
+</p><p>
+</p><p>
+</p><p>
+</p><h3>Step 5: Install the Decompressor</h3>
+<p>
+Now run the 7-zip portable installer by double-clicking on the file <code>7-ZipPortable_9.20_Rev_2.paf.exe</code> inside our working directory. A dialog should appear.
+</p><p>
+</p><ul>
+<li> Select English as language (this is not strictly necessary, but otherwise the following instructions may not match the messages in the dialog boxes you'll see).
+</li><li> Press the button <strong>Ok</strong>.
+</li><li> Press the button <strong>Next</strong>.
+</li><li> In the edit box that appear specify <strong><code>C:\gcc-lua-install\7zip</code></strong> as destination folder.
+</li><li> Press the button <strong>Install</strong> and wait for the installation to complete.
+</li><li> Press the button <strong>Finish</strong>.
+</li></ul>
+<p>
+The current content of our working directory now should be:
+</p><p>
+</p><pre>        C:\gcc-lua-install\tdm-gcc-4.9.2.exe
+        C:\gcc-lua-install\lua-5.3.0.tar.gz
+        C:\gcc-lua-install\7-ZipPortable_9.20_Rev_3.paf.exe
+        C:\gcc-lua-install\tdm-gcc
+        C:\gcc-lua-install\7zip
+</pre>
+<p>
+with the last item being the subdirectory where 7-zip is now installed.
+</p><p>
+</p><h3>Step 6: Unpack Lua Sources using 7-Zip</h3>
+<p>
+</p><ul>
+<li> Browse into the 7-zip installation directory (i.e. <code>C:\gcc-lua-install\7zip</code>) and double-click on the file <code>7-ZipPortable.exe</code>. This will execute 7-zip and bring up the program's main window, which vaguely resembles Windows Explorer.
+</li><li> <strong>Using 7-zip window</strong>, navigate to our working directory (e.g. you can copy and paste <code>C:\gcc-lua-install</code> in its location bar and press <strong>Return</strong>).
+</li><li> Inside 7-zip window, double-click on Lua package file (<code>lua-5.3.0.tar.gz</code>), you should see the "internals" of the package as a single folder called <code>lua-5.3.0.tar</code>.
+</li><li> Double-click on <code>lua-5.3.0.tar</code>, you should "enter" that folder and see another folder named <code>lua-5.3.0</code>.
+</li><li> <strong>Right-click</strong> on <code>lua-5.3.0</code>, a context menu should appear. Select the <strong>Copy To...</strong> option from that menu. A dialog with a <strong>Copy</strong> caption should appear.
+</li><li> Specify our working directory (<code>C:\gcc-lua-install</code>) in that dialog as destination and press <strong>Ok</strong>.
+</li><li> Close 7-zip window, we no longer need it.
+</li></ul>
+<p>
+Now browse into our working directory and check it: a new subdirectory named <code>lua-5.3.0</code> should be present.
+</p><p>
+The current content of our working directory now should be:
+</p><p>
+</p><pre>        C:\gcc-lua-install\tdm-gcc-4.9.2.exe
+        C:\gcc-lua-install\lua-5.3.0.tar.gz
+        C:\gcc-lua-install\7-ZipPortable_9.20_Rev_3.paf.exe
+        C:\gcc-lua-install\tdm-gcc
+        C:\gcc-lua-install\7zip
+        C:\gcc-lua-install\lua-5.3.0
+</pre>
+<p>
+with the last item being the subdirectory where Lua sources have been unpacked.
+</p><p>
+</p><h3>Step 6: Create a Windows Shell Script to Drive the Build</h3>
+The reader should create a text file named <code>build.cmd</code> in our working directory then copy and paste the following text inside it.
+<p>
+</p><dl>
+<dt></dt><dd><pre>        @echo off
+        :: ========================
+        :: file build.cmd
+        :: ========================
+        setlocal
+        :: you may change the following variable's value
+        :: to suit the downloaded version
+        set lua_version=5.3.0
+
+        set work_dir=%~dp0
+        :: Removes trailing backslash
+        :: to enhance readability in the following steps
+        set work_dir=%work_dir:~0,-1%
+        set lua_install_dir=%work_dir%\lua
+        set compiler_bin_dir=%work_dir%\tdm-gcc\bin
+        set lua_build_dir=%work_dir%\lua-%lua_version%
+        set path=%compiler_bin_dir%;%path%
+
+        cd /D %lua_build_dir%
+        mingw32-make PLAT=mingw
+
+        echo.
+        echo **** COMPILATION TERMINATED ****
+        echo.
+        echo **** BUILDING BINARY DISTRIBUTION ****
+        echo.
+
+        :: create a clean "binary" installation
+        mkdir %lua_install_dir%
+        mkdir %lua_install_dir%\doc
+        mkdir %lua_install_dir%\bin
+        mkdir %lua_install_dir%\include
+
+        copy %lua_build_dir%\doc\*.* %lua_install_dir%\doc\*.*
+        copy %lua_build_dir%\src\*.exe %lua_install_dir%\bin\*.*
+        copy %lua_build_dir%\src\*.dll %lua_install_dir%\bin\*.*
+        copy %lua_build_dir%\src\luaconf.h %lua_install_dir%\include\*.*
+        copy %lua_build_dir%\src\lua.h %lua_install_dir%\include\*.*
+        copy %lua_build_dir%\src\lualib.h %lua_install_dir%\include\*.*
+        copy %lua_build_dir%\src\lauxlib.h %lua_install_dir%\include\*.*
+        copy %lua_build_dir%\src\lua.hpp %lua_install_dir%\include\*.*
+
+        echo.
+        echo **** BINARY DISTRIBUTION BUILT ****
+        echo.
+
+        %lua_install_dir%\bin\lua.exe -e"print [[Hello!]];print[[Simple Lua test successful!!!]]"
+
+        echo.
+
+        pause
+        </pre>
+</dd></dl>
+<p>
+The current content of our working directory now should be:
+</p><p>
+</p><pre>        C:\gcc-lua-install\tdm-gcc-4.9.2.exe
+        C:\gcc-lua-install\lua-5.3.0.tar.gz
+        C:\gcc-lua-install\7-ZipPortable_9.20_Rev_3.paf.exe
+        C:\gcc-lua-install\tdm-gcc
+        C:\gcc-lua-install\7zip
+        C:\gcc-lua-install\lua-5.3.0
+        C:\gcc-lua-install\build.cmd
+</pre>
+<p>
+Now <strong>run the shell script by double-clicking on <code>build.cmd</code></strong>, a window with a black background should appear. Inside it you should see the messages produced by the script as it works (most of them are from GCC during the compilation of Lua sources).
+</p><p>
+This can take a while, but it heavily depends on the performance of your PC. With our test system it took about a minute, but that was a rather old system. After the compilation has finished, the script will also create a "clean" binary distribution (i.e. without unnecessary source files) in our working directory and will perform a simple test that will print a welcome message before terminating.
+You should see that self-explanatory message at the end of the output in the black window. You can now close the black window.
+</p><p>
+The current content of our working directory now should be:
+</p><p>
+</p><pre>        C:\gcc-lua-install\tdm-gcc-4.9.2.exe
+        C:\gcc-lua-install\lua-5.3.0.tar.gz
+        C:\gcc-lua-install\7-ZipPortable_9.20_Rev_3.paf.exe
+        C:\gcc-lua-install\tdm-gcc
+        C:\gcc-lua-install\7zip
+        C:\gcc-lua-install\lua-5.3.0
+        C:\gcc-lua-install\build.cmd
+        C:\gcc-lua-install\lua
+</pre>
+<p>
+</p><p>
+</p><h3>Step 7: Copy the Lua Binary Installation in a Suitable Location</h3>
+<p>
+The directory <code>C:\gcc-lua-install\lua</code> now contains everything is needed to run a Lua script. You can copy this directory with its content wherever you may find convenient (even on a USB pen drive!).
+The internal structure of lua binary installation directory should be the following:
+</p><p>
+</p><pre>        lua-----+--bin
+                |
+                +--doc
+                |
+                +--include
+</pre>
+<p>
+In the <code>bin</code> subdirectory you will find <code>lua.exe</code>, the Lua interpreter (if you double-click on it it will run in interactive mode), whereas in the <code>doc</code> subdirectory you will find the Lua reference manual.
+</p><p>
+</p><h3>Step 8: Configure the System to Run Lua Files</h3>
+<p>
+If you want to be able to type:
+</p><p>
+</p><pre>        lua myscript.lua
+</pre>
+<p>
+to run <code>myscript.lua</code> from the command line you must put the Lua bin subdirectory on the Windows search path.
+</p><p>
+</p><hr><h2>Concluding Remarks</h2>
+<p>
+After you have copied the <code>lua</code> subdirectory in its final location, you could completely delete the working directory with all its content.
+</p><p>
+However, you can salvage many useful things easily:
+</p><p>
+</p><ul>
+<li> The installation packages <code>lua-5.3.0.tar.gz</code>, <code>tdm-gcc-4.9.2.exe</code> and <code>7-ZipPortable_9.20_Rev_3.paf.exe</code> can be stored away for future needs or backup purposes.
+</li><li> The GCC installation dir <code>tdm-gcc</code> can be copied or moved wherever you want (be careful not to put it in a directory having spaces in it) and the tools inside <code>tdm-gcc\bin</code> can be invoked directly from the command line (you must add <code>tdm-gcc</code> on the Windows search path if you want to avoid specifying their full pathname, however).
+</li><li> The 7-zip installation dir is also fully relocatable ("portable", as non-programmer Windows users would say, but portability in programming has another meaning <a href="http://en.wikipedia.org/wiki/Software_portability">[7]</a>). Thus you can move/copy it wherever you want and start 7-zip by executing the <code>7-ZipPortable.exe</code> executable inside. It is so lightweight it fits nicely also on a pendrive!
+</li><li> If you are curious you can also explore the <code></code> directory and give a look inside the Lua sources, but you need to be a C programmer to understand most of them!
+</li></ul>
+<p>
+</p><h3>Have Fun with Lua!!!</h3>
+<hr>
+<a href="http://lua-users.org/wiki/RecentChanges">RecentChanges</a> · <a href="http://lua-users.org/cgi-bin/wiki.pl?action=editprefs">preferences</a><br>
+<a href="http://lua-users.org/cgi-bin/wiki.pl?action=edit&amp;id=BuildingLuaInWindowsForNewbies">edit</a> · <a href="http://lua-users.org/cgi-bin/wiki.pl?action=history&amp;id=BuildingLuaInWindowsForNewbies">history</a><br>Last edited August 17, 2016 5:17 pm GMT <a href="http://lua-users.org/cgi-bin/wiki.pl?action=browse&amp;diff=1&amp;id=BuildingLuaInWindowsForNewbies">(diff)</a>
+
+<object id="__symantecPKIClientMessenger" data-supports-flavor-configuration="true" data-extension-version="0.5.0.109" style="display: none;"></object><span id="__symantecPKIClientDetector" style="display: none;">__PRESENT</span></body></html>
